@@ -48,7 +48,7 @@ class ShowPlacesFragment : Fragment() {
         requestQueue = Volley.newRequestQueue(context)
 
         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+long+"&radius=1500&keyword="+placeTo+"&key="+getString(R.string.google_place_key)
-        Log.d("URL", url)
+
         getPlaceList(url!!)
 
         recyclerViewAdapter!!.setOnRecyclerViewClickListener(Listener())
@@ -59,26 +59,35 @@ class ShowPlacesFragment : Fragment() {
 
     fun getPlaceList(URL:String){
         var jsonObjectRequest = JsonObjectRequest(Request.Method.GET, URL, null, Response.Listener {response ->
-            var arr = response.getJSONArray("results")
-            for( i in 0..arr.length()-1){
-                var obj = arr.getJSONObject(i)
-                var photoReference:String ?= null
-                if(obj.has("photos")){
-                    photoReference = obj.getJSONArray("photos").getJSONObject(0).getString("photo_reference")
+            if(response.getString("status") == "OK")
+            {
+                var arr = response.getJSONArray("results")
+                for( i in 0..arr.length()-1){
+                    var obj = arr.getJSONObject(i)
+                    var photoReference:String ?= null
+                    if(obj.has("photos")){
+                        photoReference = obj.getJSONArray("photos").getJSONObject(0).getString("photo_reference")
+                    }
+                    val place = Place(
+                        obj.getJSONObject("geometry").getJSONObject("location").getDouble("lat"),
+                        obj.getJSONObject("geometry").getJSONObject("location").getDouble("lng"),
+                        photoReference,
+                        obj.getString("place_id"),
+                        obj.getString("name"),
+                        obj.getString("vicinity")
+                    )
+                    placeArrayList?.add(place)
+                    recyclerViewAdapter?.notifyDataSetChanged()
                 }
-                val place = Place(
-                    obj.getJSONObject("geometry").getJSONObject("location").getDouble("lat"),
-                    obj.getJSONObject("geometry").getJSONObject("location").getDouble("lng"),
-                    photoReference,
-                    obj.getString("place_id"),
-                    obj.getString("name"),
-                    obj.getString("vicinity")
-                )
-                placeArrayList?.add(place)
-                recyclerViewAdapter?.notifyDataSetChanged()
             }
+            else
+            {
+                Toast.makeText(context, "No result found", Toast.LENGTH_SHORT).show()
+            }
+
         }, Response.ErrorListener { error ->
             Log.d("Unsuccessful", "Value Not Parsed "+error.toString())
+            Toast.makeText(context, "Error occured while inquiring!!", Toast.LENGTH_SHORT).show()
         })
 
         requestQueue?.add(jsonObjectRequest)

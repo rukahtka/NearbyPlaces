@@ -1,6 +1,7 @@
 package com.example.nearbyplaces
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class PlaceDetail : Fragment(){
                 "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + place.photoReference.toString() + "&key="+getString(R.string.google_place_key)
             ).into(placeImg!!)
         } else {
+            Log.d("image", "image in else")
             placeImg?.setImageResource(R.drawable.noimage)
         }
 
