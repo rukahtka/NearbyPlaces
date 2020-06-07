@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NearbyPlaces</string>
+    <string name="google_maps_key">Google Map Key</string>
+    <string name="google_place_key">Google Place Key</string>
+</resources>

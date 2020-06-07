@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/container">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Near"
+            android:textSize="90sp"
+            android:gravity="center"
+            android:id="@+id/textName1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="By"
+            android:textSize="90sp"
+            android:gravity="center"
+            android:layout_below="@+id/textName1"
+            android:id="@+id/textName2"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Places"
+            android:textSize="90sp"
+            android:gravity="center"
+            android:layout_below="@+id/textName2"
+            android:id="@+id/textName3"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/edtPalce"
+        android:layout_below="@+id/textName3"
+        android:hint="Enter place to search nearby"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/edtPalce"
+        android:text="Search"
+        android:id="@+id/btnSearch"/>
+    </RelativeLayout>
+
+</FrameLayout>
